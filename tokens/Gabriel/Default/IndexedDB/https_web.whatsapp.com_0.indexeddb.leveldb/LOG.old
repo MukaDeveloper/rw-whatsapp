@@ -1,0 +1,64 @@
+2024/01/29-15:03:09.355 2edc Reusing MANIFEST D:\Programação\Node.js\WhatsApp - Gabriel\tokens\Gabriel\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/01/29-15:03:09.355 2edc Recovering log #798
+2024/01/29-15:03:09.386 2edc Reusing old log D:\Programação\Node.js\WhatsApp - Gabriel\tokens\Gabriel\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000798.log 
+2024/01/29-15:03:22.131 1ed0 Level-0 table #827: started
+2024/01/29-15:03:22.231 1ed0 Level-0 table #827: 1325159 bytes OK
+2024/01/29-15:03:22.255 1ed0 Delete type=0 #798
+2024/01/29-15:03:22.506 1ed0 Compacting 1@0 + 1@1 files
+2024/01/29-15:03:22.571 1ed0 Generated table #828@0: 19724 keys, 491175 bytes
+2024/01/29-15:03:22.613 1ed0 Generated table #829@0: 759 keys, 27679 bytes
+2024/01/29-15:03:22.645 1ed0 Generated table #830@0: 448 keys, 11827 bytes
+2024/01/29-15:03:22.645 1ed0 Compacted 1@0 + 1@1 files => 530681 bytes
+2024/01/29-15:03:22.671 1ed0 compacted to: files[ 0 3 26 0 0 0 0 ]
+2024/01/29-15:03:22.671 1ed0 Delete type=2 #802
+2024/01/29-15:03:22.671 1ed0 Delete type=2 #827
+2024/01/29-15:03:23.543 1ed0 Compacting 1@1 + 10@2 files
+2024/01/29-15:03:23.714 1ed0 Generated table #831@1: 41719 keys, 2235412 bytes
+2024/01/29-15:03:23.824 1ed0 Generated table #832@1: 3635 keys, 2164555 bytes
+2024/01/29-15:03:23.921 1ed0 Generated table #833@1: 3930 keys, 2160088 bytes
+2024/01/29-15:03:23.993 1ed0 Generated table #834@1: 3156 keys, 2159695 bytes
+2024/01/29-15:03:24.139 1ed0 Generated table #835@1: 4464 keys, 2166827 bytes
+2024/01/29-15:03:24.282 1ed0 Generated table #836@1: 4185 keys, 2161814 bytes
+2024/01/29-15:03:24.386 1ed0 Generated table #837@1: 4403 keys, 2160764 bytes
+2024/01/29-15:03:24.495 1ed0 Generated table #838@1: 4745 keys, 2164968 bytes
+2024/01/29-15:03:24.596 1ed0 Generated table #839@1: 27833 keys, 2190076 bytes
+2024/01/29-15:03:24.702 1ed0 Generated table #840@1: 31747 keys, 2256696 bytes
+2024/01/29-15:03:24.736 1ed0 Generated table #841@1: 2719 keys, 193138 bytes
+2024/01/29-15:03:24.736 1ed0 Compacted 1@1 + 10@2 files => 22014033 bytes
+2024/01/29-15:03:24.754 1ed0 compacted to: files[ 0 2 27 0 0 0 0 ]
+2024/01/29-15:03:24.754 1ed0 Delete type=2 #803
+2024/01/29-15:03:24.754 1ed0 Delete type=2 #804
+2024/01/29-15:03:24.754 1ed0 Delete type=2 #805
+2024/01/29-15:03:24.754 1ed0 Delete type=2 #806
+2024/01/29-15:03:24.754 1ed0 Delete type=2 #807
+2024/01/29-15:03:24.754 1ed0 Delete type=2 #808
+2024/01/29-15:03:24.754 1ed0 Delete type=2 #809
+2024/01/29-15:03:24.754 1ed0 Delete type=2 #810
+2024/01/29-15:03:24.754 1ed0 Delete type=2 #811
+2024/01/29-15:03:24.754 1ed0 Delete type=2 #812
+2024/01/29-15:03:24.754 1ed0 Delete type=2 #828
+2024/01/29-15:23:21.586 1ed0 Compacting 1@1 + 10@2 files
+2024/01/29-15:23:21.757 1ed0 Generated table #842@1: 29130 keys, 2259374 bytes
+2024/01/29-15:23:21.949 1ed0 Generated table #843@1: 30013 keys, 2253318 bytes
+2024/01/29-15:23:22.088 1ed0 Generated table #844@1: 19961 keys, 2201958 bytes
+2024/01/29-15:23:22.223 1ed0 Generated table #845@1: 12842 keys, 2139515 bytes
+2024/01/29-15:23:22.351 1ed0 Generated table #846@1: 37542 keys, 2168429 bytes
+2024/01/29-15:23:22.481 1ed0 Generated table #847@1: 107993 keys, 2262345 bytes
+2024/01/29-15:23:22.594 1ed0 Generated table #848@1: 99761 keys, 2248407 bytes
+2024/01/29-15:23:22.727 1ed0 Generated table #849@1: 99742 keys, 2250535 bytes
+2024/01/29-15:23:22.846 1ed0 Generated table #850@1: 98260 keys, 2248007 bytes
+2024/01/29-15:23:22.971 1ed0 Generated table #851@1: 99652 keys, 2248750 bytes
+2024/01/29-15:23:22.994 1ed0 Generated table #852@1: 629 keys, 14839 bytes
+2024/01/29-15:23:22.994 1ed0 Compacted 1@1 + 10@2 files => 22295477 bytes
+2024/01/29-15:23:23.014 1ed0 compacted to: files[ 0 1 28 0 0 0 0 ]
+2024/01/29-15:23:23.015 1ed0 Delete type=2 #814
+2024/01/29-15:23:23.015 1ed0 Delete type=2 #815
+2024/01/29-15:23:23.015 1ed0 Delete type=2 #816
+2024/01/29-15:23:23.015 1ed0 Delete type=2 #817
+2024/01/29-15:23:23.015 1ed0 Delete type=2 #818
+2024/01/29-15:23:23.015 1ed0 Delete type=2 #819
+2024/01/29-15:23:23.015 1ed0 Delete type=2 #820
+2024/01/29-15:23:23.015 1ed0 Delete type=2 #821
+2024/01/29-15:23:23.015 1ed0 Delete type=2 #822
+2024/01/29-15:23:23.015 1ed0 Delete type=2 #823
+2024/01/29-15:23:23.015 1ed0 Delete type=2 #829

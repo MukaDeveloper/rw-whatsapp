@@ -17,7 +17,7 @@ function importFunctions(client) {
 async function start(client) {
     console.log("Importando funções!");
     await importFunctions(client);
-    client.webhook();
+    client.statusMonday();
     console.log("Funções em execução!\n")
 }
 

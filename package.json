@@ -12,11 +12,14 @@
   "author": "Samuel Bertoni",
   "license": "ISC",
   "dependencies": {
+    "better-sqlite3": "^9.3.0",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
+    "firebase-admin": "^12.0.0",
     "fs": "^0.0.1-security",
     "nodemon": "^3.0.3",
     "path": "^0.12.7",
+    "quick.db": "^9.1.7",
     "venom-bot": "^5.0.19"
   }
 }

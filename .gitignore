@@ -1,5 +1,5 @@
 node_modules/
-session/
+.wwebjs_cache/
 
 package-lock.json
 

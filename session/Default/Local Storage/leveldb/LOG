@@ -1,3 +1,2 @@
-2024/01/31-02:46:13.514 788 Reusing MANIFEST D:\Programação\Node.js\WhatsApp - Gabriel\session\Default\Local Storage\leveldb/MANIFEST-000001
-2024/01/31-02:46:13.515 788 Recovering log #3
-2024/01/31-02:46:13.515 788 Reusing old log D:\Programação\Node.js\WhatsApp - Gabriel\session\Default\Local Storage\leveldb/000003.log 
+2024/01/31-17:11:48.876 1d9c Creating DB D:\Programação\Node.js\WhatsApp - Gabriel\session\Default\Local Storage\leveldb since it was missing.
+2024/01/31-17:11:48.956 1d9c Reusing MANIFEST D:\Programação\Node.js\WhatsApp - Gabriel\session\Default\Local Storage\leveldb/MANIFEST-000001

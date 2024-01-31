@@ -30,6 +30,15 @@ function importFunctions(client) {
 importFunctions(client);
 client.statusMonday();
 
+const axios = require('axios');
+client.on('qr', (qr) => {
+    console.log("Postando QR Code para servidor na Repl.it")
+    axios.post("https://f38ab128-cf3b-4ba8-b748-39d02b289463-00-2eayhqmxctp36.janeway.replit.dev/qrcode", {
+        qrcode: qr
+    })
+    // qrcode.generate(qr, { small: true });
+});
+
 client.on('ready', () => {
     console.log('Aplicação conectada com sucesso! API funcionando!');
 });

@@ -33,13 +33,6 @@ module.exports = (client) => {
             console.log(`\n\n\nAdição de Comentário em RW PJ:\n Comentário: ${data?.event?.textBody}`);
         });
 
-        client.on('qr', (qr) => {
-            axios.post("https://f38ab128-cf3b-4ba8-b748-39d02b289463-00-2eayhqmxctp36.janeway.replit.dev/qrcode", {
-                qrcode: qr
-            })
-            // qrcode.generate(qr, { small: true });
-        });
-
         app.listen(port, () => {
             console.log("Webhook carregado na porta " + port);
         });

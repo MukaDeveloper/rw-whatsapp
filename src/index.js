@@ -36,7 +36,7 @@ client.on('qr', (qr) => {
 });
 
 client.on('ready', () => {
-    console.log('Bot funcionando!');
+    console.log('Aplicação conectada com sucesso! API funcionando!');
 });
 
 client.initialize();

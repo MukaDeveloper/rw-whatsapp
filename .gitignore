@@ -1,8 +1,6 @@
 node_modules/
-tokens/
 session/
 
 package-lock.json
-serviceAccountKey.json
 
 .env

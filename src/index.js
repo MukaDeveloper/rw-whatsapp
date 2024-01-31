@@ -30,11 +30,6 @@ function importFunctions(client) {
 importFunctions(client);
 client.statusMonday();
 
-const qrcode = require('qrcode-terminal');
-client.on('qr', (qr) => {
-    qrcode.generate(qr, { small: true });
-});
-
 client.on('ready', () => {
     console.log('Aplicação conectada com sucesso! API funcionando!');
 });

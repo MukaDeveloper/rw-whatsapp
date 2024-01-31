@@ -11,9 +11,13 @@ module.exports = (client) => {
 
         app.post("/status", async (req, res) => {
             const data = req.body;
-            const number = process.env.wppnumberStatus || "000000000000@c.us";
+            res.send({
+                status: "success",
+                challenge: data.challenge,
+            });
 
-            client.sendText(number, `${data.message}`).then((result) => console.log(result.status.messageSendResult)).catch((error) => console.error(error))
+            const number = process.env.wppnumberStatus || "000000000000@c.us";
+            client.sendText(number, `Atualização de Status em RW PJ:\n\nElement: ${data.event.pulseName}\nStatus: ${data.event.value.label.text}`).then((result) => console.log(result.status.messageSendResult)).catch((error) => console.error(error))
         });
 
         app.listen(port, () => {

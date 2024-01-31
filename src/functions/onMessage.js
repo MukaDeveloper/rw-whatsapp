@@ -1,6 +1,3 @@
-const { QuickDB } = require("quick.db");
-const db = new QuickDB({ table: "chatUser" });
-
 module.exports = (client) => {
     client.on('message', async (message) => {
         console.log(message);

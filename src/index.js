@@ -1,8 +1,21 @@
-const venom = require('venom-bot');
-const sessionName = "Gabriel";
-
 const path = require('path');
 const fs = require('fs')
+
+const rootPath = path.join(__dirname, '..');
+const sessionPath = path.join(rootPath, 'session.json');
+
+let sessionData;
+if (fs.existsSync(sessionPath)) {
+    sessionData = require(sessionPath);
+}
+
+const { Client, LocalAuth } = require('whatsapp-web.js');
+const client = new Client({
+    authStrategy: new LocalAuth({
+        dataPath: rootPath,
+    })
+});
+
 
 const functionsDir = path.join(__dirname, 'functions');
 const functionFiles = fs.readdirSync(functionsDir);
@@ -14,44 +27,18 @@ function importFunctions(client) {
     })
 }
 
-async function start(client) {
-    console.log("Importando funções!");
-    await importFunctions(client);
-    client.statusMonday();
-    console.log("Funções em execução!\n")
-}
+importFunctions(client);
+client.statusMonday();
 
-venom.create(sessionName,
-    (base64Qr, asciiQR, attempts, urlCode) => {
-        var matches = base64Qr.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
-            response = {};
+const qrcode = require('qrcode-terminal');
+client.on('qr', (qr) => {
+    qrcode.generate(qr, { small: true });
+});
 
-        if (matches.length !== 3) {
-            return new Error('Invalid input string');
-        }
-        response.type = matches[1];
-        response.data = new Buffer.from(matches[2], 'base64');
+client.on('ready', () => {
+    console.log('Bot funcionando!');
+});
 
-        var imageBuffer = response;
-        require('fs').writeFile(
-            `qrCode_${sessionName}.png`,
-            imageBuffer['data'],
-            'binary',
-            function (err) {
-                if (err != null) {
-                    console.log(err);
-                }
-            }
-        );
-    },
-    undefined,
-    {
-        disableSpins: true,
-        headless: true,
-        logQR: true,
-    }
-).then((client) => {
-    start(client);
-}).catch((err) => console.log(err));
+client.initialize();
 
-module.exports.client = venom.client;
+module.exports = client;

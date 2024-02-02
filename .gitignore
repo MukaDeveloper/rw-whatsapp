@@ -2,6 +2,9 @@ node_modules/
 
 .wwebjs_cache/
 .wwebjs_auth/
+wppsessions/
+
+src/database
 
 package-lock.json
 qrcode.png

@@ -4,5 +4,7 @@ node_modules/
 .wwebjs_auth/
 
 package-lock.json
+qrcode.png
 
 .env
+squarecloud.app

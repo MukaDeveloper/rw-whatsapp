@@ -3,57 +3,48 @@ const fs = require('fs')
 
 require('dotenv').config();
 
-const { Client, RemoteAuth } = require('whatsapp-web.js');
-// CONEXÃO COM MONGOOSE
-const { MongoStore } = require('wwebjs-mongo');
-const mongoose = require('mongoose');
+const { Client, LocalAuth } = require('whatsapp-web.js');
 
-let cliente;
-
-// CARREGA AS INFORMAÇÕES DE SESSÃO
-mongoose.connect(process.env.MONGODB_URI).then(() => {
-    const store = new MongoStore({ mongoose: mongoose });
-    const client = new Client({
-        authStrategy: new RemoteAuth({
-            store: store,
-            backupSyncIntervalMs: 300000
-        })
-    });
-
-
-    // CARREGANDO FUNÇÕES
-    const functionsDir = path.join(__dirname, 'functions');
-    const functionFiles = fs.readdirSync(functionsDir);
-    function importFunctions(client) {
-        functionFiles.forEach((file) => {
-            const functionsPath = path.join(functionsDir, file);
-            require(functionsPath)(client);
-        })
-    }
-    importFunctions(client);
-
-
-    // EXPORTANDO QR CODE PARA REPLIT
-    const axios = require('axios');
-    client.on('qr', (qr) => {
-        console.log("Postando QR Code para servidor na Repl.it")
-        axios.post(process.env.replitPost, {
-            qrcode: qr
-        })
-        // qrcode.generate(qr, { small: true });
-    });
-
-
-    // EVENTO READY
-    client.on('ready', () => {
-        console.log('Aplicação conectada com sucesso! API funcionando!');
-    });
-
-
-    client.initialize();
-    cliente = client;
+const client = new Client({
+    // puppeteer: {
+    // 	args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    // },
+    authStrategy: new LocalAuth({
+        dataPath: 'wppsessions'
+    })
 });
 
 
+// CARREGANDO FUNÇÕES
+const listenersDir = path.join(__dirname, 'listeners');
+const listenerFiles = fs.readdirSync(listenersDir);
+function importListeners(client) {
+    listenerFiles.forEach((file) => {
+        const listenersPath = path.join(listenersDir, file);
+        require(listenersPath)(client);
+    })
+}
+importListeners(client);
 
-module.exports = cliente;
+
+// EXPORTANDO QR CODE PARA PNG
+client.on('qr', (qr) => {
+    const qrcd = require('qr-image');
+    console.log('Gerando QR Code...');
+
+    const qrCodeImagePath = 'qrcode.png';
+    const qrCodeImage = qrcd.imageSync(qr, { type: 'png' });
+    fs.writeFileSync(qrCodeImagePath, qrCodeImage);
+
+    console.log('QR Code salvo em:', qrCodeImagePath);
+});
+
+
+// EVENTO READY
+client.on('ready', () => {
+    console.log('Aplicação conectada com sucesso! API funcionando!');
+});
+
+client.initialize();
+
+module.exports = client;

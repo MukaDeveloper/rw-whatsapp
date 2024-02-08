@@ -12,7 +12,7 @@ module.exports = (client) => {
     client.on('message', async (message) => {
         // message?.isGroupMsg === true
         if (message.from !== process.env.wppnumberStatus) return;
-        if (message?.type === "chat" && message?.from !== "status@broadcast") {
+        if (message?.type === "chat" && message?.from !== "status@broadcast" && message.isNewMsg === true) {
             const id = message?.from
 
             let user = await db.get(`chat_user_${id}`);

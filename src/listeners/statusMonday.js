@@ -14,12 +14,16 @@ module.exports = (client) => {
 
     app.post("/status", async (req, res) => {
         const data = req.body;
-        res.status(200).send({
-            challenge: data.challenge,
-        });
 
-        if (!data.event.pulseName) return;
-        const number = process.env.wppnumberStatus || message.from
+		if(data.challenge) {
+			res.status(200).send({
+	            challenge: data.challenge,
+	        });
+			console.log(data.challenge);
+		}
+
+        if (!data.event) return;
+        const number = process.env.wppnumberStatus || "11970170823@c.us"
         const message = `*Atualização de Status em RW PJ:*\n\nNome da empresa: ${data.event.pulseName}\nFase anterior: _${data.event.previousValue.label.text}_\nFase atual: _${data.event.value.label.text}_`
         await client.sendMessage(number, message);
     });

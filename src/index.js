@@ -28,20 +28,15 @@ importListeners(client);
 
 
 // EXPORTANDO QR CODE PARA PNG
-client.on('qr', async (qr) => {
-    const qrCode = require('qrcode-terminal');
-    try {
-        qrCode.generate(qr, { small: true });
-    } catch (error) {
-        console.error('Erro no evento QR:', error);
-    }
-    // console.log('Gerando QR Code...');
+client.on('qr', (qr) => {
+    const qrcd = require('qr-image');
+    console.log('Gerando QR Code...');
 
-    // const qrCodeImagePath = 'qrcode.png';
-    // const qrCodeImage = qrcd.imageSync(qr, { type: 'png' });
-    // fs.writeFileSync(qrCodeImagePath, qrCodeImage);
+    const qrCodeImagePath = 'qrcode.png';
+    const qrCodeImage = qrcd.imageSync(qr, { type: 'png' });
+    fs.writeFileSync(qrCodeImagePath, qrCodeImage);
 
-    // console.log('QR Code salvo em:', qrCodeImagePath);
+    console.log('QR Code salvo em:', qrCodeImagePath);
 });
 
 

@@ -28,11 +28,11 @@ async function getStateFromCpf(cpf) {
   const response = await axios.post("https://api.monday.com/v2", { query }, {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': process.env.mondayAPIkey // Inserir a chave de API da Monday.com
+      'Authorization': process.env.mondayAPIToken
     },
   }).catch(error => console.error(error.message));
 
-  return response.data;
+	return response.data;
 }
 
 module.exports = {

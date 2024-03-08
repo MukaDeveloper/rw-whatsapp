@@ -28,7 +28,7 @@ async function getStateFromCpf(cpf) {
   const response = await axios.post("https://api.monday.com/v2", { query }, {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': process.env.mondayAPIToken
+      'Authorization': process.env.MondayApiKey
     },
   }).catch(error => console.error(error.message));
 

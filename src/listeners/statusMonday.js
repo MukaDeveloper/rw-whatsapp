@@ -4,7 +4,7 @@ module.exports = (client) => {
     require('dotenv').config();
 
     const app = express();
-    const port = process.env.port || 3000;
+    const port = process.env.PORT || 3000;
 
     app.use(bodyParser.json());
 
@@ -19,11 +19,10 @@ module.exports = (client) => {
 			res.status(200).send({
 	            challenge: data.challenge,
 	        });
-			console.log(data.challenge);
 		}
 
         if (!data.event) return;
-        const number = process.env.wppnumberStatus || "11970170823@c.us"
+        const number = process.env.WhatsAppGroup || "11970170823@c.us"
         const message = `*Atualização de Status em RW PJ:*\n\nNome da empresa: ${data.event.pulseName}\nFase anterior: _${data.event.previousValue.label.text}_\nFase atual: _${data.event.value.label.text}_`
         await client.sendMessage(number, message);
     });

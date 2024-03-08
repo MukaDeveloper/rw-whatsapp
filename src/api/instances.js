@@ -1,7 +1,7 @@
 const { setInstance } = require("./manager");
 
-async function backToMenu(client, id) {
-    await client.sendMessage(id, "Selecione abaixo o que mais se encaixa com o que deseja:\n\n1 - Consultar Status do Processo de Pessoa Física\n2 - Sair");
+async function menuMessage(client, id) {
+    await client.sendMessage(id, "1 - Consultar Status do Processo de Pessoa Física\n2 - Sair");
     await setInstance(id, 1);
 }
 
@@ -16,7 +16,7 @@ async function instance01(message, id) {
 }
 
 module.exports = {
-	backToMenu,
+	menuMessage,
 	resetInstance,
 	instance01,
 }

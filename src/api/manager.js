@@ -5,7 +5,7 @@ const axios = require('axios');
 require('dotenv').config();
 
 async function setInstance(id, instance) {
-  const data = { instance: instance, admin: false, }
+  const data = { instance: instance }
   await db.set(`chat_user_${id}`, data);
 }
 
@@ -25,14 +25,19 @@ async function getStateFromCpf(cpf) {
 }
 `;
 
-  const response = await axios.post("https://api.monday.com/v2", { query }, {
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': process.env.MondayApiKey
-    },
-  }).catch(error => console.error(error.message));
+  try {
+    const response = await axios.post("https://api.monday.com/v2", { query }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': process.env.MondayApiKey
+      },
+    }).catch(error => console.error(error.message));
 
-	return response.data;
+    return response?.data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+
 }
 
 module.exports = {

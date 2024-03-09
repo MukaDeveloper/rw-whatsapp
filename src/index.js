@@ -4,6 +4,7 @@ const fs = require('fs')
 require('dotenv').config();
 
 const { Client, LocalAuth } = require('whatsapp-web.js');
+const { resetInstance } = require('./api/utils');
 
 const client = new Client({
     puppeteer: {
@@ -15,16 +16,11 @@ const client = new Client({
 });
 
 // CARREGANDO FUNÇÕES
-const listenersDir = path.join(__dirname, 'listeners');
-const listenerFiles = fs.readdirSync(listenersDir);
-function importListeners(client) {
-    listenerFiles.forEach((file) => {
-        const listenersPath = path.join(listenersDir, file);
-        require(listenersPath)(client);
-    })
+const handlersFolder = fs.readdirSync(`./src/handlers`).filter((file) => file.endsWith(".js"));
+for (const file of handlersFolder) {
+    require(`./handlers/${file}`)(client);
 }
-importListeners(client);
-
+client.eventsHandler();
 
 // EXPORTANDO QR CODE PARA PNG
 client.on('qr', (qr) => {
@@ -42,23 +38,7 @@ client.on('qr', (qr) => {
 
 
 // REINICIO DAS INSTÂNCIAS
-// async function resetInstance() {
-//     const { QuickDB } = require("quick.db");
-//     const db = new QuickDB({ table: "chatUser", filePath: path.join(process.cwd(), "src/database/whatsapp.sqlite") });
-//     console.log("Procurando usuários instanciados")
-//     const entries = await db.all();
-//     await entries.filter((e) => e.value.instance != 0).map(async each => {
-//         console.log("Instância resetada com sucesso.");
-//         await db.set(each.id, { instance: 0 });
-//     });
-// }
-
-// resetInstance();
-
-// EVENTO READY
-client.on('ready', () => {
-    console.log('Aplicação conectada com sucesso! API funcionando!');
-});
+resetInstance();
 
 client.initialize();
 

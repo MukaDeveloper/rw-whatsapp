@@ -1,23 +1,27 @@
 const path = require("path");
 const { setInstance, getStateFromCpf } = require("./manager");
 
-const menu = `1 - Consultar Status de Processo de Pessoa Física\n2 - Sair`
+const menu = `*1* - Consultar Etapa do Processo de Pessoa Física\n*2* - Parcerias\n*3* - Atendimento ao cliente\n*4* - Finalizar Atendimento`
 
+// Resentando instância para 0 = finalizando atendimento
 async function resetInstance(client, id) {
 	await client.sendMessage(id, "Sua sessão foi finalizada. Acesse novamente usando o comando de inicialização.");
 	await setInstance(id, 0);
 }
 
+// Definindo instância 1 = indo para a área de escolha de opções globais
 async function onChooseMenu(client, id) {
-	await client.sendMessage(id, `Olá! Tudo bem? Seja bem-vindo(a) ao atendimento da RW Financiamentos! Para melhor atendê-lo, selecione abaixo o que mais se encaixa com o que deseja:\n\n${menu}`);
+	await client.sendMessage(id, `Olá! Tudo bem? Seja bem-vindo(a) ao atendimento da *RW SOLUÇÃO EM CRÉDITO*! Para melhor atendê-lo, selecione abaixo o que mais se encaixa com o que deseja:\n\n${menu}`);
 	await setInstance(id, 1);
 }
 
+// Definindo instância 5 = Pedindo para o usuário digitar o CPF
 async function selectCPF(client, id) {
 	await client.sendMessage(id, `Digite o CPF que deseja pesquisar (atualmente no formato xxx.xxx.xxx-xx).`);
-	await setInstance(id, 2);
+	await setInstance(id, 5);
 }
 
+// Tratando recebimento de informação da Monday, resultado da busca
 async function queryCPF(cpf, id, message, client) {
     const result = await getStateFromCpf(cpf);
     const pessoa = result?.data.items_page_by_column_values?.items[0];
@@ -33,7 +37,8 @@ async function queryCPF(cpf, id, message, client) {
     }
 }
 
-async function resetInstance() {
+
+async function resetInstances() {
 	const { QuickDB } = require("quick.db");
 	const db = new QuickDB({ table: "chatUser", filePath: path.join(process.cwd(), "src/database/whatsapp.sqlite") });
     console.log("Procurando usuários instanciados");
@@ -51,5 +56,6 @@ module.exports = {
 	resetInstance,
 	onChooseMenu,
 	selectCPF,
-	queryCPF
+	queryCPF,
+    resetInstances,
 }

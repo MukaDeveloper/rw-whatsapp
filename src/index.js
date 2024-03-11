@@ -4,7 +4,7 @@ const fs = require('fs')
 require('dotenv').config();
 
 const { Client, LocalAuth } = require('whatsapp-web.js');
-const { resetInstance } = require('./api/utils');
+const { resetInstances } = require('./api/utils');
 
 const client = new Client({
     puppeteer: {
@@ -38,7 +38,7 @@ client.on('qr', (qr) => {
 
 
 // REINICIO DAS INSTÂNCIAS
-resetInstance();
+resetInstances();
 
 client.initialize();
 

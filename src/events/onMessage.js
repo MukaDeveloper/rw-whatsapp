@@ -40,7 +40,7 @@ module.exports = {
                     // Se a pessoa escolheu a opção 3, acontece isso (Atendimento ao cliente):
                     else if (message?.body === 3) {
                     }
-                    // Se a pessoa escolheu a opção 2, acontece isso:
+                    // Se a pessoa escolheu a opção 2, acontece isso (Finalizar):
                     else if (message?.body === 4) {
                         resetInstance(client, id);
                     }

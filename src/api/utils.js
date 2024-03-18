@@ -1,7 +1,7 @@
 const path = require("path");
 const { setInstance, getStateFromCpf } = require("./manager");
 
-const menu = `1 - Consultar Status de Processo de Pessoa Física\n2 - Sair`
+const menu = `*1* - Consultar Etapa do Processo de Pessoa Física\n*2* - Parcerias\n*3* - Atendimento ao cliente\n*4* - Finalizar Atendimento`
 
 async function resetInstance(client, id) {
 	await client.sendMessage(id, "Sua sessão foi finalizada. Acesse novamente usando o comando de inicialização.");
@@ -9,13 +9,57 @@ async function resetInstance(client, id) {
 }
 
 async function onChooseMenu(client, id) {
-	await client.sendMessage(id, `Olá! Tudo bem? Seja bem-vindo(a) ao atendimento da RW Financiamentos! Para melhor atendê-lo, selecione abaixo o que mais se encaixa com o que deseja:\n\n${menu}`);
+	await client.sendMessage(id, `Olá! Tudo bem? Seja bem-vindo(a) ao atendimento da *RW SOLUÇÃO EM CRÉDITO*! Para melhor atendê-lo, selecione abaixo o que mais se encaixa com o que deseja:\n\n${menu}`);
 	await setInstance(id, 1);
 }
 
 async function selectCPF(client, id) {
-	await client.sendMessage(id, `Digite o CPF que deseja pesquisar (atualmente no formato xxx.xxx.xxx-xx).`);
+	await client.sendMessage(id, `Digite o CPF que deseja pesquisar ou 2 para sair.`);
 	await setInstance(id, 2);
+}
+
+async function validarCPF(cpf) {
+    cpf = cpf.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+
+    if (cpf.length !== 11) return false; // Verifica se o CPF tem 11 dígitos
+
+    // Verifica se todos os dígitos são iguais, o que tornaria o CPF inválido
+    if (/^(\d)\1+$/.test(cpf)) return false;
+
+    // Algoritmo para validar o CPF
+    let soma = 0;
+    let resto;
+    for (let i = 1; i <= 9; i++) {
+        soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+    }
+
+    resto = (soma * 10) % 11;
+
+    if (resto === 10 || resto === 11) {
+        resto = 0;
+    }
+
+    if (resto !== parseInt(cpf.substring(9, 10))) {
+        return false;
+    }
+
+    soma = 0;
+
+    for (let i = 1; i <= 10; i++) {
+        soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+    }
+
+    resto = (soma * 10) % 11;
+
+    if (resto === 10 || resto === 11) {
+        resto = 0;
+    }
+
+    if (resto !== parseInt(cpf.substring(10, 11))) {
+        return false;
+    }
+
+    return true;
 }
 
 async function queryCPF(cpf, id, message, client) {
@@ -51,5 +95,6 @@ module.exports = {
 	resetInstance,
 	onChooseMenu,
 	selectCPF,
+    validarCPF,
 	queryCPF
 }

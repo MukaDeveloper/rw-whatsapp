@@ -25,8 +25,9 @@ client.webhooks();
 
 // EXPORTANDO QR CODE PARA PNG
 client.on('qr', (qr) => {
-    // const qrcode = require("qrcode-terminal");
-    // qrcode.generate(qr, { small: true });
+    const qrcode = require("qrcode-terminal");
+    qrcode.generate(qr, { small: true });
+    // ===================================================
     const qrcd = require('qr-image');
     console.log('Gerando QR Code...');
 

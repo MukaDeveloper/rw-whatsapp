@@ -17,7 +17,6 @@ async function onChooseMenu(client, id) {
 
 // Definindo instância 5 = Pedindo para o usuário digitar o CPF
 async function selectCPF(client, id) {
-<<<<<<< HEAD
 	await client.sendMessage(id, `Digite o CPF que deseja pesquisar ou 2 para sair.`);
 	await setInstance(id, 2);
 }
@@ -66,13 +65,17 @@ async function validarCPF(cpf) {
     return true;
 }
 
-=======
-	await client.sendMessage(id, `Digite o CPF que deseja pesquisar (atualmente no formato xxx.xxx.xxx-xx).`);
-	await setInstance(id, 5);
+function formatarCPF(cpf) {
+    // Remover caracteres não numéricos
+    cpf = cpf.replace(/\D/g, '');
+
+    if (cpf.length === 11) {
+        return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    } else {
+        return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})?/, '$1.$2.$3-$4');
+    }
 }
 
-// Tratando recebimento de informação da Monday, resultado da busca
->>>>>>> 16b50a3ffc04bcf03f2f53fb3da2d35b9c988325
 async function queryCPF(cpf, id, message, client) {
     const result = await getStateFromCpf(cpf);
     const pessoa = result?.data.items_page_by_column_values?.items[0];
@@ -104,14 +107,11 @@ async function resetInstances() {
 }
 
 module.exports = {
+    resetInstances,
 	resetInstance,
 	onChooseMenu,
 	selectCPF,
-<<<<<<< HEAD
     validarCPF,
+    formatarCPF,
 	queryCPF
-=======
-	queryCPF,
-    resetInstances,
->>>>>>> 16b50a3ffc04bcf03f2f53fb3da2d35b9c988325
 }

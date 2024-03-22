@@ -1,24 +1,31 @@
-const path = require("path");
-const { setInstance, getStateFromCpf } = require("./manager");
+const { getUser } = require("../database/db");
+const { getStateFromCpf } = require("./manager");
 
+const User = require('../database/schemas/user.schema');
 const menu = `*1* - Consultar Etapa do Processo de Pessoa Física\n*2* - Parcerias\n*3* - Atendimento ao cliente\n*4* - Finalizar Atendimento`
+
+async function setInstance(id, instance) {
+    const user = await getUser(id);
+    user.instance = instance;
+    await user.save();
+}
 
 // Resentando instância para 0 = finalizando atendimento
 async function resetInstance(client, id) {
-	await client.sendMessage(id, "Sua sessão foi finalizada. Acesse novamente usando o comando de inicialização.");
-	await setInstance(id, 0);
+    await client.sendMessage(id, "Sua sessão foi finalizada. Acesse novamente usando o comando de inicialização.");
+    await setInstance(id, 0);
 }
 
 // Definindo instância 1 = indo para a área de escolha de opções globais
 async function onChooseMenu(client, id) {
-	await client.sendMessage(id, `Olá! Tudo bem? Seja bem-vindo(a) ao atendimento da *RW SOLUÇÃO EM CRÉDITO*! Para melhor atendê-lo, selecione abaixo o que mais se encaixa com o que deseja:\n\n${menu}`);
-	await setInstance(id, 1);
+    await client.sendMessage(id, `Olá! Tudo bem? Seja bem-vindo(a) ao atendimento da *RW SOLUÇÃO EM CRÉDITO*! Para melhor atendê-lo, selecione abaixo o que mais se encaixa com o que deseja:\n\n${menu}`);
+    await setInstance(id, 1);
 }
 
-// Definindo instância 5 = Pedindo para o usuário digitar o CPF
+// Definindo instância 2 = Pedindo para o usuário digitar o CPF
 async function selectCPF(client, id) {
-	await client.sendMessage(id, `Digite o CPF que deseja pesquisar ou 2 para sair.`);
-	await setInstance(id, 2);
+    await client.sendMessage(id, `Digite o CPF que deseja pesquisar ou 2 para sair.`);
+    await setInstance(id, 2);
 }
 
 async function validarCPF(cpf) {
@@ -78,6 +85,7 @@ function formatarCPF(cpf) {
 
 async function queryCPF(cpf, id, message, client) {
     const result = await getStateFromCpf(cpf);
+    console.log(result);
     const pessoa = result?.data.items_page_by_column_values?.items[0];
     if (!pessoa) {
         return await client.sendMessage(id, "Nenhum cadastro encontrado para esse CPF. Tente novamente.");
@@ -91,27 +99,28 @@ async function queryCPF(cpf, id, message, client) {
     }
 }
 
-
 async function resetInstances() {
-	const { QuickDB } = require("quick.db");
-	const db = new QuickDB({ table: "chatUser", filePath: path.join(process.cwd(), "src/database/whatsapp.sqlite") });
     console.log("Procurando usuários instanciados");
-    const entries = await db.all();
-    let i = 0;
-    await entries.filter((e) => e.value.instance != 0).map(async each => {
-        i++;
-        await db.set(each.id, { instance: 0 });
-    });
-    if (i === 0) console.log("Nenhum usuário encontrado, prosseguindo inicialização.")
-    else console.log(`${i} usuário${i === 1 ? '': 's'} encontrado${i === 1 ? '': 's'} e resetado${i === 1 ? '': 's'}.`);
+    const users = await User.find({ instance: { $ne: 0 } });
+    let count = 0;
+    for (const user of users) {
+        user.instance = 0;
+        await user.save();
+        count++;
+    }
+    if (count === 0) {
+        console.log("Nenhum usuário encontrado, prosseguindo inicialização.");
+    } else {
+        console.log(`${count} usuário${count === 1 ? '' : 's'} encontrado${count === 1 ? '' : 's'} e resetado${count === 1 ? '' : 's'}.`);
+    }
 }
 
 module.exports = {
     resetInstances,
-	resetInstance,
-	onChooseMenu,
-	selectCPF,
+    resetInstance,
+    onChooseMenu,
+    selectCPF,
     validarCPF,
     formatarCPF,
-	queryCPF
+    queryCPF
 }

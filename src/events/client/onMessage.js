@@ -1,9 +1,9 @@
 const path = require('path');
 
-const { QuickDB } = require("quick.db");
-const db = new QuickDB({ table: "chatUser", filePath: path.join(process.cwd(), "src/database/whatsapp.sqlite") });
 
-const { onChooseMenu, resetInstance, selectCPF, validarCPF, queryCPF, formatarCPF } = require("../api/utils");
+
+const { onChooseMenu, resetInstance, selectCPF, validarCPF, queryCPF, formatarCPF } = require("../../api/utils");
+const { getUser } = require('../../database/db');
 
 module.exports = {
     name: 'message',
@@ -13,12 +13,7 @@ module.exports = {
         // if (message.from !== process.env.WhatsAppGroup) return;
         if (message?.type === "chat" && message?.from !== "status@broadcast") {
             const id = message?.from;
-            let user = await db.get(`chat_user_${id}`);
-            const data = { instance: 0 }
-            if (!user) {
-                await db.set(`chat_user_${id}`, data);
-                user = await db.get(`chat_user_${id}`);
-            };
+            let user = await getUser(id);
 
             // Quando a pessoa enviar mensagem, verificar qual instância a pessoa está
             switch (user.instance) {
@@ -52,10 +47,8 @@ module.exports = {
                 // Se a instância for 2 significa que a pessoa selecionou a opção 1 na escolha:
                 case 2:
                     if (message?.body === '2') return resetInstance(client, id);
-                    console.log(await validarCPF(message?.body));
                     if (await validarCPF(message?.body)) {
                         const cpf = await formatarCPF(message?.body);
-                        console.log(cpf);
                         await queryCPF(cpf, id, message, client);
                     } else {
                         await client.sendMessage(id, "CPF inválido.");

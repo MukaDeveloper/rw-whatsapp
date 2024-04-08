@@ -85,10 +85,9 @@ function formatarCPF(cpf) {
 
 async function queryCPF(cpf, id, message, client) {
     const result = await getStateFromCpf(cpf);
-    console.log(result);
     const pessoa = result?.data.items_page_by_column_values?.items[0];
     if (!pessoa) {
-        return await client.sendMessage(id, "Nenhum cadastro encontrado para esse CPF. Tente novamente.");
+        return await client.sendMessage(id, `Nenhum cadastro encontrado para o CPF *${cpf}*. Tente novamente.`);
     }
     try {
         await message.reply(`O resultado da consulta do CPF ${cpf} retornou:\n_Nome:_ ${pessoa.name}\n_Fase atual:_ ${pessoa.status[0].text}`);
@@ -115,6 +114,17 @@ async function resetInstances() {
     }
 }
 
+async function startOrResetTimer(user) {
+    if (!user) return;
+    user.timer = 10 * 60 * 1000;
+    await user.save();
+}
+async function clearTimer(user) {
+    if (!user) return;
+    user.timer = null;
+    await user.save();
+}
+
 module.exports = {
     resetInstances,
     resetInstance,
@@ -122,5 +132,7 @@ module.exports = {
     selectCPF,
     validarCPF,
     formatarCPF,
-    queryCPF
+    queryCPF,
+    startOrResetTimer,
+    clearTimer,
 }

@@ -18,7 +18,10 @@ const main = async () => {
         authStrategy: new RemoteAuth({
             store: store,
             backupSyncIntervalMs: 60000,
-        })
+        }),
+        webVersionCache: { 
+            type: 'remote', remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html', 
+        }
     });
 
     // CARREGANDO FUNÇÕES
@@ -44,7 +47,6 @@ const main = async () => {
 
         // console.log('QR Code salvo em:', qrCodeImagePath);
     });
-
 
     // REINICIO DAS INSTÂNCIAS
     resetInstances();

@@ -10,6 +10,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    timer: {
+        type: Number,
+        default: null,
+    },
     isAdmin: {
         type: Boolean,
         default: false

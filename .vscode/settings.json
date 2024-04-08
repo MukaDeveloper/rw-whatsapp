@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "undefined/subscriptions/3b1f620d-1ca2-4929-bb25-e92b98a0a7e5/resourceGroups/RW-Whatsapp/providers/Microsoft.Web/sites/RW-Whatsapp",
-    "appService.deploySubpath": "."
-}

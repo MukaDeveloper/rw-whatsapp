@@ -17,7 +17,7 @@ const main = async () => {
         },
         authStrategy: new RemoteAuth({
             store: store,
-            backupSyncIntervalMs: 60000,
+            backupSyncIntervalMs: 600000,
         }),
         webVersionCache: { 
             type: 'remote', remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html', 
@@ -34,18 +34,18 @@ const main = async () => {
 
     // EXPORTANDO QR CODE PARA PNG
     client.on('qr', (qr) => {
-        console.log('Gerando QR Code...');
-        const qrcode = require("qrcode-terminal");
-        qrcode.generate(qr, { small: true });
-        // ===================================================
-        // const qrcd = require('qr-image');
         // console.log('Gerando QR Code...');
+        // const qrcode = require("qrcode-terminal");
+        // qrcode.generate(qr, { small: true });
+        // ===================================================
+        const qrcd = require('qr-image');
+        console.log('Gerando QR Code...');
 
-        // const qrCodeImagePath = 'qrcode.png';
-        // const qrCodeImage = qrcd.imageSync(qr, { type: 'png' });
-        // fs.writeFileSync(qrCodeImagePath, qrCodeImage);
+        const qrCodeImagePath = 'qrcode.png';
+        const qrCodeImage = qrcd.imageSync(qr, { type: 'png' });
+        fs.writeFileSync(qrCodeImagePath, qrCodeImage);
 
-        // console.log('QR Code salvo em:', qrCodeImagePath);
+        console.log('QR Code salvo em:', qrCodeImagePath);
     });
 
     // REINICIO DAS INSTÂNCIAS
